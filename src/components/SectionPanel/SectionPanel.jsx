@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styles from "./SectionPanel.module.css";
 import Education from "@/components/sections/Education";
 import Experience from "@/components/sections/Experience";
@@ -8,13 +7,13 @@ import Thesis from "@/components/sections/Thesis";
 import Contact from "@/components/sections/Contact";
 
 const SECTION_MAP = {
-  hero: () => <HeroPanel />,
-  education: () => <Education />,
-  experience: () => <Experience />,
-  skills: () => <Skills />,
-  projects: () => <Projects />,
-  thesis: () => <Thesis />,
-  contact: () => <Contact />,
+  hero: HeroPanel,
+  education: Education,
+  experience: Experience,
+  skills: Skills,
+  projects: Projects,
+  thesis: Thesis,
+  contact: Contact,
 };
 
 function HeroPanel() {
@@ -29,7 +28,6 @@ function HeroPanel() {
         Master's student in Resilient and Cyber-Physical Systems at the
         University of Florence. Practical experience in full-stack development
         and AI-driven applications. Built and deployed real-world projects.
-        Strong problem-solver, comfortable working independently and in teams.
       </p>
       <div className={styles.heroLinks}>
         <a href="mailto:hrishigaa@gmail.com" className={styles.heroLink}>
@@ -49,19 +47,17 @@ function HeroPanel() {
 }
 
 export default function SectionPanel({ sectionId, onClose }) {
-  useEffect(() => {
-    function onKey(e) {
-      if (e.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
   const Content = SECTION_MAP[sectionId];
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.panel} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={styles.overlay}
+      onClick={(e) => {
+        // Only close if clicking the dark overlay itself, not the panel
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className={styles.panel}>
         <button
           className={styles.closeBtn}
           onClick={onClose}

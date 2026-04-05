@@ -12,47 +12,52 @@ export default function Game() {
   const keysRef = useRef({});
   const rafRef = useRef(null);
   const panelOpenRef = useRef(false);
+  const nearbyZoneRef = useRef(null);
+  const lastInteractRef = useRef(0); // timestamp guard — prevents re-open loop
 
   const [nearbyZone, setNearbyZone] = useState(null);
   const [activePanel, setActivePanel] = useState(null);
 
   const openPanel = useCallback((zone) => {
     if (!zone) return;
+    const now = Date.now();
+    // Ignore if opened less than 400ms ago — prevents double-fire
+    if (now - lastInteractRef.current < 400) return;
+    lastInteractRef.current = now;
     panelOpenRef.current = true;
     setActivePanel(zone.id);
   }, []);
 
   const closePanel = useCallback(() => {
+    // Timestamp guard — prevents immediate reopen
+    lastInteractRef.current = Date.now();
     panelOpenRef.current = false;
-    setActivePanel(null);
     playerRef.current.path = [];
+    setActivePanel(null);
+    setNearbyZone(null);
+    nearbyZoneRef.current = null;
   }, []);
 
-  // Tap/click → pathfind
-  function handleCanvasClick(e) {
+  // Canvas click/tap → pathfind
+  function handleCanvasPointer(e) {
+    e.preventDefault();
     if (panelOpenRef.current) return;
 
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
-
-    // Support both mouse and touch
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
+    const clientX = e.touches ? e.changedTouches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.changedTouches[0].clientY : e.clientY;
     const screenX = clientX - rect.left;
     const screenY = clientY - rect.top;
 
-    // Convert screen coords to world coords using camera
     const player = playerRef.current;
     const camX = player.x - canvas.width / 2;
     const camY = player.y - canvas.height / 2;
     const worldX = screenX + camX;
     const worldY = screenY + camY;
-
     const tileCol = Math.floor(worldX / TILE_SIZE);
     const tileRow = Math.floor(worldY / TILE_SIZE);
 
-    // Run BFS
     const path = findPath(player.x, player.y, tileCol, tileRow);
     player.path = path;
   }
@@ -69,14 +74,13 @@ export default function Game() {
     window.addEventListener("resize", resize);
 
     function onKeyDown(e) {
+      // Don't process game keys while panel is open
+      if (panelOpenRef.current) return;
+
       keysRef.current[e.key] = true;
 
-      if (e.key === "Escape") {
-        closePanel();
-        return;
-      }
-      if ((e.key === "e" || e.key === "E") && !panelOpenRef.current) {
-        const zone = getNearbyZone(playerRef.current.x, playerRef.current.y);
+      if (e.key === "e" || e.key === "E") {
+        const zone = nearbyZoneRef.current;
         if (zone) openPanel(zone);
       }
       if (
@@ -85,41 +89,35 @@ export default function Game() {
         e.preventDefault();
       }
     }
+
     function onKeyUp(e) {
       keysRef.current[e.key] = false;
     }
 
+    // ESC handled separately — works even when panel is open
+    function onEsc(e) {
+      if (e.key === "Escape" && panelOpenRef.current) {
+        closePanel();
+      }
+    }
+
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("keydown", onEsc);
 
-    // Game loop
     function loop() {
       if (!panelOpenRef.current) {
         updatePlayer(playerRef.current, keysRef.current);
         const zone = getNearbyZone(playerRef.current.x, playerRef.current.y);
+        nearbyZoneRef.current = zone;
         setNearbyZone(zone);
-
-        // Auto-open panel if player walks into zone via tap path
-        if (zone && playerRef.current.path.length === 0) {
-          const dist = Math.sqrt(
-            Math.pow(
-              playerRef.current.x - zone.tileX * TILE_SIZE - TILE_SIZE / 2,
-              2,
-            ) +
-              Math.pow(
-                playerRef.current.y - zone.tileY * TILE_SIZE - TILE_SIZE / 2,
-                2,
-              ),
-          );
-          if (dist < 20) openPanel(zone);
-        }
       }
 
       render(
         ctx,
         canvas,
         playerRef.current,
-        panelOpenRef.current ? null : nearbyZone,
+        panelOpenRef.current ? null : nearbyZoneRef.current,
         playerRef.current.path,
       );
 
@@ -132,23 +130,23 @@ export default function Game() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("keydown", onEsc);
     };
-  }, [openPanel, closePanel, nearbyZone]);
+  }, [openPanel, closePanel]);
 
   return (
     <div className={styles.game}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
-        onClick={handleCanvasClick}
-        onTouchEnd={handleCanvasClick}
+        onClick={handleCanvasPointer}
+        onTouchEnd={handleCanvasPointer}
       />
 
       {activePanel && (
         <SectionPanel sectionId={activePanel} onClose={closePanel} />
       )}
 
-      {/* Desktop hint */}
       <div className={styles.controls}>
         <span>WASD / ↑↓←→ move</span>
         <span className={styles.divider}>·</span>
@@ -157,9 +155,8 @@ export default function Game() {
         <span>ESC close</span>
       </div>
 
-      {/* Mobile hint — only shown on touch devices */}
       <div className={styles.mobileHint}>
-        Tap to move · Tap terminal to interact
+        Tap to move · Tap near terminal to interact
       </div>
     </div>
   );
