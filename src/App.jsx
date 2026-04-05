@@ -1,17 +1,13 @@
 import { useState } from "react";
-import Boot from "@/components/Boot/Boot";
-import TitleScreen from "@/components/TitleScreen/TitleScreen";
-import Game from "@/components/Game/Game";
-import "./styles/globals.css";
+import TitleScreen from "./components/TitleScreen/TitleScreen";
+import Desktop from "./core/Desktop";
 
 export default function App() {
-  const [screen, setScreen] = useState("boot");
+  const [mode, setMode] = useState("menu");
 
-  return (
-    <div className="app">
-      {screen === "boot" && <Boot onComplete={() => setScreen("title")} />}
-      {screen === "title" && <TitleScreen onPlay={() => setScreen("game")} />}
-      {screen === "game" && <Game />}
-    </div>
-  );
+  if (mode === "menu") {
+    return <TitleScreen setMode={setMode} />;
+  }
+
+  return <Desktop setMode={setMode} />;
 }
