@@ -1,0 +1,21 @@
+.mobileHint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Fira Code", monospace;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .controls {
+    display: none;
+  }
+  .mobileHint {
+    display: block;
+  }
+}
