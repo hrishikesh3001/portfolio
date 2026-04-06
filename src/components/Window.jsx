@@ -23,7 +23,18 @@ export default function Window({
             <button style={styles.minBtn} onClick={onMinimize}>
               _
             </button>
-            <button style={styles.closeBtn} onClick={onClose}>
+            <button
+              onClick={onClose}
+              style={{
+                background: "red",
+                color: "white",
+                border: "2px outset #fff",
+                width: "24px",
+                height: "24px",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
               X
             </button>
           </div>

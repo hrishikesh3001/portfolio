@@ -7,7 +7,11 @@ import Boot from "./system/Boot";
 import Login from "./system/Login";
 
 export default function App() {
-  const [screen, setScreen] = useState("menu");
+  const [screen, setScreen] = useState(
+    localStorage.getItem("screen") || "menu",
+  );
+
+  useEffect(() => localStorage.setItem("screen", screen), [screen]);
 
   useEffect(() => {
     if (screen === "transition") {
