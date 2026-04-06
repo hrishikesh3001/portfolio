@@ -6,9 +6,11 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  font-family: "Fira Code", monospace;
+  color: #eceef8;
 }
 
-/* Neon perspective grid floor */
+/* GRID */
 .grid {
   position: absolute;
   inset: 0;
@@ -30,313 +32,108 @@
   }
 }
 
-/* Pixel city silhouette */
+/* CITY */
 .cityscape {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  height: 38%;
-  background:
-    /* Buildings as pixel blocks using gradients */ linear-gradient(
-    to top,
-    #0a0c1a 0%,
-    transparent 100%
-  );
-  /* Buildings drawn via box shadows on a pseudo element */
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(to top, #0a0c1a, transparent);
 }
 
-.cityscape::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background-color: #0a0c1a;
-  clip-path: polygon(
-    0% 100%,
-    0% 65%,
-    3% 65%,
-    3% 45%,
-    5% 45%,
-    5% 65%,
-    7% 65%,
-    7% 30%,
-    9% 30%,
-    9% 25%,
-    11% 25%,
-    11% 30%,
-    12% 30%,
-    12% 65%,
-    14% 65%,
-    14% 50%,
-    16% 50%,
-    16% 40%,
-    18% 40%,
-    18% 50%,
-    19% 50%,
-    19% 65%,
-    21% 65%,
-    21% 20%,
-    22% 20%,
-    22% 15%,
-    24% 15%,
-    24% 20%,
-    25% 20%,
-    25% 65%,
-    28% 65%,
-    28% 55%,
-    30% 55%,
-    30% 45%,
-    32% 45%,
-    32% 55%,
-    33% 55%,
-    33% 65%,
-    36% 65%,
-    36% 35%,
-    38% 35%,
-    38% 28%,
-    39% 28%,
-    39% 35%,
-    41% 35%,
-    41% 65%,
-    44% 65%,
-    44% 50%,
-    46% 50%,
-    46% 65%,
-    50% 65%,
-    50% 25%,
-    51% 25%,
-    51% 18%,
-    53% 18%,
-    53% 25%,
-    54% 25%,
-    54% 65%,
-    56% 65%,
-    56% 40%,
-    58% 40%,
-    58% 32%,
-    60% 32%,
-    60% 40%,
-    62% 40%,
-    62% 65%,
-    65% 65%,
-    65% 48%,
-    67% 48%,
-    67% 65%,
-    70% 65%,
-    70% 22%,
-    71% 22%,
-    71% 16%,
-    73% 16%,
-    73% 22%,
-    74% 22%,
-    74% 65%,
-    76% 65%,
-    76% 38%,
-    78% 38%,
-    78% 30%,
-    80% 30%,
-    80% 38%,
-    81% 38%,
-    81% 65%,
-    83% 65%,
-    83% 52%,
-    85% 52%,
-    85% 65%,
-    87% 65%,
-    87% 42%,
-    89% 42%,
-    89% 35%,
-    91% 35%,
-    91% 42%,
-    93% 42%,
-    93% 65%,
-    95% 65%,
-    95% 55%,
-    97% 55%,
-    97% 65%,
-    100% 65%,
-    100% 100%
-  );
-}
-
-/* Neon window lights on buildings */
-.cityscape::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background-image:
-    radial-gradient(
-      1px 1px at 8% 50%,
-      rgba(0, 200, 255, 0.9) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 10% 42%,
-      rgba(245, 166, 35, 0.8) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 22% 35%,
-      rgba(0, 200, 255, 0.9) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 23% 48%,
-      rgba(245, 166, 35, 0.7) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 37% 45%,
-      rgba(0, 200, 255, 0.8) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 51% 38%,
-      rgba(245, 166, 35, 0.9) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 52% 52%,
-      rgba(0, 200, 255, 0.7) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 59% 48%,
-      rgba(245, 166, 35, 0.8) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 71% 32%,
-      rgba(0, 200, 255, 0.9) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 72% 45%,
-      rgba(245, 166, 35, 0.7) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 79% 42%,
-      rgba(0, 200, 255, 0.8) 0%,
-      transparent 100%
-    ),
-    radial-gradient(
-      1px 1px at 90% 50%,
-      rgba(245, 166, 35, 0.9) 0%,
-      transparent 100%
-    );
-  animation: windowFlicker 3s ease-in-out infinite alternate;
-}
-
-@keyframes windowFlicker {
-  from {
-    opacity: 0.6;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
+/* CONTENT */
 .content {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding-bottom: 15vh;
 }
 
 .subtitle {
-  font-family: "Fira Code", monospace;
   font-size: 0.8rem;
-  color: var(--clr-secondary);
+  color: #4fc3f7;
   letter-spacing: 0.4em;
   margin-bottom: 1rem;
-  text-shadow: var(--glow-blue);
 }
 
 .name {
   font-family: "Rajdhani", sans-serif;
-  font-size: clamp(3.5rem, 10vw, 7rem);
-  font-weight: 700;
-  color: var(--clr-text);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.2rem;
-  text-shadow:
-    0 0 30px rgba(79, 195, 247, 0.4),
-    0 0 80px rgba(79, 195, 247, 0.15);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .role {
-  font-family: "Fira Code", monospace;
-  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
-  color: var(--clr-text-muted);
-  letter-spacing: 0.12em;
-  margin-bottom: 3rem;
+  font-size: 0.8rem;
+  color: #7986cb;
+  margin-bottom: 2rem;
 }
 
+/* BUTTONS */
 .buttons {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
+}
+
+.buttons {
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .playBtn {
-  font-family: "Rajdhani", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #000;
-  background: var(--clr-primary);
-  border: none;
-  padding: 0.85rem 2.5rem;
-  cursor: pointer;
-  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  transition: all 0.2s ease;
-  box-shadow: var(--glow-gold);
+  background: #f5a623;
+  color: black;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.playBtn {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .playBtn:hover {
-  background: #ffc14d;
   transform: scale(1.05);
 }
 
 .resumeBtn {
-  font-family: "Rajdhani", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--clr-secondary);
-  background: transparent;
-  border: 1px solid var(--clr-secondary);
-  padding: 0.85rem 2rem;
-  cursor: pointer;
-  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  transition: all 0.2s ease;
-  text-decoration: none;
-  display: inline-block;
+  border: 1px solid #4fc3f7;
+  color: #4fc3f7;
+  padding: 10px 20px;
 }
 
 .resumeBtn:hover {
   background: rgba(79, 195, 247, 0.1);
-  box-shadow: var(--glow-blue);
 }
 
 .hint {
-  font-family: "Fira Code", monospace;
-  font-size: 0.65rem;
-  color: var(--clr-text-faint);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  color: #2e3264;
 }
 
+/* SCANLINES */
 .scanlines {
   position: absolute;
   inset: 0;
@@ -348,5 +145,43 @@
     rgba(0, 0, 0, 0.12) 4px
   );
   pointer-events: none;
-  z-index: 5;
+}
+
+.title::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 255, 200, 0.15), transparent 60%);
+  animation: moveGlow 10s linear infinite;
+  z-index: 1;
+}
+
+@keyframes moveGlow {
+  from {
+    transform: translate(-25%, -25%);
+  }
+  to {
+    transform: translate(25%, 25%);
+  }
+}
+
+.name {
+  text-shadow:
+    0 0 20px rgba(79, 195, 247, 0.5),
+    0 0 60px rgba(79, 195, 247, 0.2);
+}
+
+.subtitle {
+  text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+}
+
+.playBtn,
+.resumeBtn {
+  transition: all 0.2s ease;
+}
+
+.playBtn:active,
+.resumeBtn:active {
+  transform: scale(0.95);
 }

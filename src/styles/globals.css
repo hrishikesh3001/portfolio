@@ -1,93 +1,41 @@
-:root {
-  /* ── Typography ──────────────────────────────────────────────── */
-  --font-display: "Rajdhani", sans-serif;
-  --font-mono: "Fira Code", monospace;
-
-  --clr-bg: #07080f; /* void black — base canvas          */
-  --clr-bg-alt: #0c0e1a; /* slightly lighter — panel bg       */
-  --clr-surface: #111428; /* cards / elevated elements         */
-  --clr-surface-alt: #1a1d38; /* hover state on surfaces           */
-  --clr-border: #252847; /* subtle borders                    */
-
-  --clr-primary: #f5a623; /* GOLD — main energy accent         */
-  --clr-primary-dim: #7a5112; /* dim gold — bg tints, shadows      */
-  --clr-secondary: #4fc3f7; /* sky blue — secondary accent       */
-  --clr-secondary-dim: #1a4f6e; /* dim blue                          */
-  --clr-tertiary: #ce93d8; /* soft violet — thesis/AI sections  */
-
-  --clr-text: #eceef8; /* primary readable text             */
-  --clr-text-muted: #7986cb; /* secondary / helper text           */
-  --clr-text-faint: #2e3264; /* barely visible — dividers, hints  */
-
-  /* ── Glow Effects ────────────────────────────────────────────── */
-  --glow-gold:
-    0 0 15px rgba(245, 166, 35, 0.7), 0 0 50px rgba(245, 166, 35, 0.25);
-  --glow-blue:
-    0 0 15px rgba(79, 195, 247, 0.6), 0 0 50px rgba(79, 195, 247, 0.2);
-  --glow-violet:
-    0 0 15px rgba(206, 147, 216, 0.5), 0 0 50px rgba(206, 147, 216, 0.15);
-  --glow-subtle: 0 0 8px rgba(245, 166, 35, 0.3);
-
-  /* ── Spacing Scale ───────────────────────────────────────────── */
-  --space-xs: 0.25rem; /*   4px */
-  --space-sm: 0.5rem; /*   8px */
-  --space-md: 1rem; /*  16px */
-  --space-lg: 2rem; /*  32px */
-  --space-xl: 4rem; /*  64px */
-  --space-2xl: 8rem; /* 128px */
-
-  /* ── Easing Curves ───────────────────────────────────────────── */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-
-  --transition-fast: 150ms var(--ease-out-expo);
-  --transition-normal: 300ms var(--ease-out-expo);
-  --transition-slow: 600ms var(--ease-out-expo);
-}
+/* RESET ONLY — NO THEME */
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-  /*
-    box-sizing: border-box means:
-    width: 200px → element is EXACTLY 200px including padding and border
-    Without this, padding ADDS to width — causes layout bugs constantly
-  */
   margin: 0;
   padding: 0;
 }
 
 html {
-  font-size: 16px; /* 1rem = 16px everywhere          */
+  font-size: 16px;
   scroll-behavior: smooth;
-  overflow-x: hidden; /* no horizontal scroll ever       */
+  overflow-x: hidden;
 }
 
 body {
-  background-color: var(--clr-bg);
-  color: var(--clr-text);
-  font-family: var(--font-mono);
-  line-height: 1.6;
+  font-family: sans-serif;
   overflow-x: hidden;
-  /* Font smoothing = crisper text on retina/HD screens */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
+/* BASIC ELEMENT RESET */
 ul,
 ol {
   list-style: none;
 }
+
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
+
 button {
   cursor: pointer;
   border: none;
   background: none;
 }
+
 img,
 svg,
 canvas,
@@ -95,54 +43,14 @@ video {
   display: block;
   max-width: 100%;
 }
+
 input,
-button,
 textarea,
 select {
   font: inherit;
 }
 
-/* BASE LAYOUT ──────────────────────────────────────────────────── */
-.app {
-  position: relative;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.section {
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid var(--clr-border);
-  overflow: hidden;
-}
-
-.section-label {
-  position: absolute;
-  bottom: var(--space-lg);
-  left: var(--space-lg);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--clr-text-faint);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-/* ── Dev placeholder style ────────────────────────────────────── */
-.placeholder {
-  padding: var(--space-md) var(--space-lg);
-  color: var(--clr-primary);
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  letter-spacing: 0.1em;
-  border-bottom: 1px solid var(--clr-border);
-  text-align: center;
-}
-
-/* ── Accessibility: screen reader only ───────────────────────── */
+/* ACCESSIBILITY */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -153,4 +61,23 @@ select {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
